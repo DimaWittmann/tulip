@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import tulip.GUI.OperationalUnits.ArithmeticUnit;
@@ -24,9 +23,9 @@ import tulip.GUI.listeners.CreateUnitAction;
 public class MainFrame extends JFrame{
     
     
-    private  JPanel grapPanel;
+    private  GraphPanel grapPanel;
 
-    public JPanel getGrapPanel() {
+    public GraphPanel getGrapPanel() {
         return grapPanel;
     }
 
@@ -38,7 +37,7 @@ public class MainFrame extends JFrame{
         
         this.add(ElementsPanel(), BorderLayout.WEST);
         
-        grapPanel = new JPanel();
+        grapPanel = new GraphPanel();
         grapPanel.setLayout(null);
         this.add(grapPanel);
         
