@@ -1,5 +1,6 @@
-package tulip.GUI.OperationalUnits;
+package tulip.GUI.OperationalUnits.implementation;
 
+import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,13 +10,13 @@ import java.awt.Polygon;
 import javax.swing.JOptionPane;
 import tulip.GUI.Constants;
 import static tulip.GUI.Constants.SIZE_UNIT;
+import tulip.GUI.OperationalUnits.interfaces.InputOutputUnit;
 
 /**
  *
  * @author Wittman
  */
-public class LogicUnit extends AbstractUnit 
-                       implements ITwoInputUnit, IOutputUnit{
+public class LogicUnit extends InputOutputUnit{
 
     
     protected Type type;
@@ -26,25 +27,7 @@ public class LogicUnit extends AbstractUnit
         setSize(new Dimension(10*SIZE_UNIT+1, 10*SIZE_UNIT+1));
     }
     
-    @Override
-    public AbstractUnit getLeftUnit() {
-        return leftUnit;
-    }
 
-    @Override
-    public void setLeftUnit(AbstractUnit leftUnit) {
-        this.leftUnit = leftUnit;
-    }
-
-    @Override
-    public AbstractUnit getRightUnit() {
-        return rightUnit;
-    }
-
-    @Override
-    public void setRightUnit(AbstractUnit rightUnit) {
-        this.rightUnit = rightUnit;
-    }
     
     @Override
     protected void paintComponent(Graphics g) {
@@ -101,31 +84,8 @@ public class LogicUnit extends AbstractUnit
         connectionPoint.y += this.getY();
         return connectionPoint;
     }   
-    
-    
-    @Override
-    public AbstractUnit getNextUnit() {
-        
-        return nextUnit;
-    }
 
-    @Override
-    public void setNextUnit(AbstractUnit nextUnit, Operand pos) {
 
-        this.position = pos;
-        this.nextUnit = nextUnit;
-    }
-    
-    
-    
-    @Override
-    public  Point getDownConnection(){
-        Point connectionPoint = new Point(getWidth()/2, getHeight());
-        connectionPoint.x += this.getX();
-        connectionPoint.y += this.getY();
-        return connectionPoint;
-    }
-    
 
     public enum Type{
         CMPE, CMPM, CMPME, CMPLE

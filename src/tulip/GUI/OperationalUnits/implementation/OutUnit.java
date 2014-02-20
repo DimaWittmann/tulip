@@ -1,5 +1,7 @@
-package tulip.GUI.OperationalUnits;
+package tulip.GUI.OperationalUnits.implementation;
 
+import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
+import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

@@ -4,9 +4,9 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import tulip.GUI.OperationalUnits.AbstractUnit;
-import tulip.GUI.OperationalUnits.IOutputUnit;
-import tulip.GUI.OperationalUnits.ITwoInputUnit;
+import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
+import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
+import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
 
 /**
  *

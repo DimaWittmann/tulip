@@ -10,9 +10,9 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import tulip.GUI.OperationalUnits.AbstractUnit;
-import tulip.GUI.OperationalUnits.IOutputUnit;
-import tulip.GUI.OperationalUnits.ITwoInputUnit;
+import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
+import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
+import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
 
 /**
  *
@@ -88,9 +88,11 @@ public class UnitListener  implements MouseListener, MouseMotionListener, KeyLis
                             null,     //do not use a custom Icon
                             options,  //the titles of buttons
                             AbstractUnit.Operand.values()[0]); //default button title
+                    if( i>=0){
+                        ((IOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[i]);
+                        tulip.Tulip.mainFrame.getGrapPanel().repaint();
+                    }
                     
-                    ((IOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[i]);
-                    tulip.Tulip.mainFrame.getGrapPanel().repaint();
                 }
                 
             }

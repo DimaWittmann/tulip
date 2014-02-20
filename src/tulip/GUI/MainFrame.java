@@ -10,10 +10,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
-import tulip.GUI.OperationalUnits.ArithmeticUnit;
-import tulip.GUI.OperationalUnits.DataUnit;
-import tulip.GUI.OperationalUnits.LogicUnit;
-import tulip.GUI.OperationalUnits.OutUnit;
+import tulip.GUI.OperationalUnits.implementation.ArithmeticUnit;
+import tulip.GUI.OperationalUnits.implementation.DataUnit;
+import tulip.GUI.OperationalUnits.implementation.LogicUnit;
+import tulip.GUI.OperationalUnits.implementation.OutUnit;
+import tulip.GUI.OperationalUnits.implementation.PropagatorUnit;
+import tulip.GUI.OperationalUnits.implementation.RepeatorUnit;
+import tulip.GUI.OperationalUnits.implementation.ValveUnit;
 import tulip.GUI.listeners.CreateUnitAction;
 
 /**
@@ -56,26 +59,44 @@ public class MainFrame extends JFrame{
         JButton button = new JButton();
         button.setAction(new CreateUnitAction(ArithmeticUnit.class));
         button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/arithm.png")));
-        button.setToolTipText("Арифметична операція");
+        button.setToolTipText("Arithmetic operation");
         
         tools.add(button);
         
         button = new JButton();
         button.setAction(new CreateUnitAction(DataUnit.class));
         button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/data.png")));
-        button.setToolTipText("Введення даних");
+        button.setToolTipText("Input operation");
         tools.add(button);
         
         button = new JButton();
         button.setAction(new CreateUnitAction(LogicUnit.class));
         button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/logic.png")));
-        button.setToolTipText( "Логічна операція");
+        button.setToolTipText( "Logic operation");
         tools.add(button);
         
         button = new JButton();
         button.setAction(new CreateUnitAction(OutUnit.class));
         button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/out.png")));
-        button.setToolTipText("Операція виведення");
+        button.setToolTipText("Output operation");
+        tools.add(button);
+        
+        button = new JButton();
+        button.setAction(new CreateUnitAction(PropagatorUnit.class));
+        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/propagator.png")));
+        button.setToolTipText("Dublicating operation");
+        tools.add(button);
+        
+        button = new JButton();
+        button.setAction(new CreateUnitAction(RepeatorUnit.class));
+        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/repeator.png")));
+        button.setToolTipText("Repeat input operation");
+        tools.add(button);
+        
+        button = new JButton();
+        button.setAction(new CreateUnitAction(ValveUnit.class));
+        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/valve.png")));
+        button.setToolTipText("Choose operation");
         tools.add(button);
         
         return scrollPane;

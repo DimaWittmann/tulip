@@ -1,4 +1,4 @@
-package tulip.GUI.OperationalUnits;
+package tulip.GUI.OperationalUnits.interfaces;
 
 import java.awt.Color;
 import java.awt.event.InputEvent;

@@ -1,5 +1,7 @@
-package tulip.GUI.OperationalUnits;
+package tulip.GUI.OperationalUnits.implementation;
 
+import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
+import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -34,7 +36,7 @@ public class DataUnit extends AbstractUnit
         g.drawOval(0, 0, SIZE_UNIT*Constants.DIAMETER*3/2, SIZE_UNIT*Constants.DIAMETER*3/2);
         g.setFont(new Font(Font.SERIF, Font.BOLD, 24));
         g.drawString(String.valueOf(data), SIZE_UNIT*Constants.DIAMETER/3, SIZE_UNIT*Constants.DIAMETER);
-        this.setBackground(new Color(255, 225, 225, 0));
+
     }
 
     

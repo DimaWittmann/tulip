@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
-import tulip.GUI.OperationalUnits.AbstractUnit;
+import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
 
 /**
  *

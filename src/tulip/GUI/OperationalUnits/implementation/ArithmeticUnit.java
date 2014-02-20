@@ -1,5 +1,6 @@
-package tulip.GUI.OperationalUnits;
+package tulip.GUI.OperationalUnits.implementation;
 
+import tulip.GUI.OperationalUnits.interfaces.InputOutputUnit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,8 +12,7 @@ import static tulip.GUI.Constants.SIZE_UNIT;
 /**
  * @author Wittman
  */
-public class ArithmeticUnit extends AbstractUnit
-                            implements ITwoInputUnit, IOutputUnit{
+public class ArithmeticUnit extends InputOutputUnit{
 
     
     protected Type type;
@@ -24,26 +24,7 @@ public class ArithmeticUnit extends AbstractUnit
         setSize(new Dimension(10*SIZE_UNIT+1, 5*SIZE_UNIT+1));
     }
     
-    @Override
-    public AbstractUnit getLeftUnit() {
-        return leftUnit;
-    }
 
-    @Override
-    public void setLeftUnit(AbstractUnit leftUnit) {
-        this.leftUnit = leftUnit;
-    }
-
-    @Override
-    public AbstractUnit getRightUnit() {
-        return rightUnit;
-    }
-
-    @Override
-    public void setRightUnit(AbstractUnit rightUnit) {
-        this.rightUnit = rightUnit;
-    }
-    
     @Override
     protected void paintComponent(Graphics g) {
         
@@ -81,45 +62,6 @@ public class ArithmeticUnit extends AbstractUnit
         }
         
     }
-
-    @Override
-    public Point getLeftConnection() {
-        Point connectionPoint = new Point(getWidth()/4, 0);
-        connectionPoint.x += this.getX();
-        connectionPoint.y += this.getY();
-        return connectionPoint;
-    }
-
-    @Override
-    public Point getRightConnection() {
-        Point connectionPoint = new Point(getWidth()/4*3, 0);
-        connectionPoint.x += this.getX();
-        connectionPoint.y += this.getY();
-        return connectionPoint;
-    }
-
-    @Override
-    public Point getDownConnection() {
-        Point connectionPoint = new Point(getWidth()/2, getHeight());
-        connectionPoint.x += this.getX();
-        connectionPoint.y += this.getY();
-        return connectionPoint;
-    }
-
-
-    @Override
-    public AbstractUnit getNextUnit() {
-        
-        return nextUnit;
-    }
-
-    @Override
-    public void setNextUnit(AbstractUnit nextUnit, Operand pos) {
-
-        this.position = pos;
-        this.nextUnit = nextUnit;
-    }
-    
     
     
     public enum Type{
