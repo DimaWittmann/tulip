@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
+import tulip.GUI.OperationalUnits.interfaces.IMultipuleOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
 
@@ -42,24 +43,48 @@ public class GraphPanel extends JPanel{
         for (AbstractUnit unit : units) {
             if(!(unit instanceof IOutputUnit)){
                 continue;
-            }
-            AbstractUnit next = ((IOutputUnit)unit).getNextUnit();
-            if(next != null && next instanceof ITwoInputUnit){
-                Point from = ((IOutputUnit)unit).getDownConnection();
-                Point to = null;
-                if(unit.position == AbstractUnit.Operand.FIRST){
-                    to = ((ITwoInputUnit)next).getLeftConnection();
-                }
-                if(unit.position == AbstractUnit.Operand.SECOND){
-                    to = ((ITwoInputUnit)next).getRightConnection();
-                }
-                g.drawLine(from.x, from.y, to.x, to.y);
-                fillArrow(from, to, g, 10, 5);
-            }
+            }else if(unit instanceof IMultipuleOutputUnit){
+                
+                
+                Point [] to = new Point[((IMultipuleOutputUnit)unit).getNumberOfNext()];
+                for (int i = 0; i < ((IMultipuleOutputUnit)unit).getNumberOfNext(); i++) {
+                    Point from = ((IMultipuleOutputUnit)unit).getDownConnection();
+                    if(((IMultipuleOutputUnit)unit).getNextUnit(i) == null){
+                        continue;
+                    }
+                    if(unit.position == AbstractUnit.Operand.FIRST){
 
-            
+                        AbstractUnit next = ((IMultipuleOutputUnit)unit).getNextUnit(i);
+                        to[i] = ((ITwoInputUnit)next).getLeftConnection();
+
+                    }else
+                    if(unit.position == AbstractUnit.Operand.SECOND){
+
+                        AbstractUnit next = ((IMultipuleOutputUnit)unit).getNextUnit(i);
+                        to[i] = ((ITwoInputUnit)next).getLeftConnection();
+
+                    }
+
+                    g.drawLine(from.x, from.y, to[i].x, to[i].y);
+                    fillArrow(from, to[i], g, 10, 5);
+                }   
+
+            }else{
+                AbstractUnit next = ((IOutputUnit)unit).getNextUnit();
+                if(next != null && next instanceof ITwoInputUnit){
+                    Point from = ((IOutputUnit)unit).getDownConnection();
+                    Point to = null;
+                    if(unit.position == AbstractUnit.Operand.FIRST){
+                        to = ((ITwoInputUnit)next).getLeftConnection();
+                    }
+                    if(unit.position == AbstractUnit.Operand.SECOND){
+                        to = ((ITwoInputUnit)next).getRightConnection();
+                    }
+                    g.drawLine(from.x, from.y, to.x, to.y);
+                    fillArrow(from, to, g, 10, 5);
+                }
+            }
         }
-        
     }
     
      /**

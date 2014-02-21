@@ -1,14 +1,19 @@
 package tulip.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import tulip.GUI.OperationalUnits.implementation.ArithmeticUnit;
 import tulip.GUI.OperationalUnits.implementation.DataUnit;
@@ -27,7 +32,11 @@ public class MainFrame extends JFrame{
     
     
     private  GraphPanel grapPanel;
-
+    private JTextArea console;
+    
+    public JTextArea getConsole(){
+        return console;
+    }
     public GraphPanel getGrapPanel() {
         return grapPanel;
     }
@@ -42,7 +51,16 @@ public class MainFrame extends JFrame{
         
         grapPanel = new GraphPanel();
         grapPanel.setLayout(null);
-        this.add(grapPanel);
+        grapPanel.setPreferredSize(new Dimension(800, 400));
+        
+        console = new JTextArea();
+        console.setEditable(false);
+        console.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+        console.setForeground(Color.red);
+        JScrollPane scrollConsole = new JScrollPane(console);
+        
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, grapPanel, scrollConsole);
+        this.add(splitPane);
         
         this.setPreferredSize(new Dimension(800, 600));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,7 +127,9 @@ public class MainFrame extends JFrame{
         
         
         JMenu runMenu = new JMenu("Run");
+        JMenuItem compile = new JMenuItem("Compile");
         
+        runMenu.add(compile);
         
         JMenu addMenu = new JMenu("Add");
         

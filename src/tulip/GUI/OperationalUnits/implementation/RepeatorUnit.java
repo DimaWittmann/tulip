@@ -51,8 +51,8 @@ public class RepeatorUnit extends InputOutputUnit{
         g.drawOval(0, 0, SIZE_UNIT*Constants.DIAMETER*3/2, SIZE_UNIT*Constants.DIAMETER*3/2);
         
         g.drawLine(getWidth()/2, getHeight()/2, getWidth()/2, getHeight());
-        g.drawLine(getWidth()/2-5, getHeight()+3, getWidth()/2, getHeight());
-        g.drawLine(getWidth()/2-5, getHeight()-3, getWidth()/2, getHeight());
+        g.drawLine(getWidth()/2+3, getHeight()-10, getWidth()/2, getHeight());
+        g.drawLine(getWidth()/2-3, getHeight()-10, getWidth()/2, getHeight());
         switch(type){
         case UNSPECIFIED:
             g.drawLine(getWidth()/2, getHeight()/2, getWidth()/3*2, getHeight()/8);

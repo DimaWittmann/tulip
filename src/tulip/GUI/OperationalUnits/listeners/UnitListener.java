@@ -9,8 +9,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import tulip.GUI.OperationalUnits.implementation.PropagatorUnit;
+import tulip.GUI.OperationalUnits.implementation.RepeatorUnit;
 
 import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
+import tulip.GUI.OperationalUnits.interfaces.IMultipuleOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
 
@@ -89,8 +92,31 @@ public class UnitListener  implements MouseListener, MouseMotionListener, KeyLis
                             options,  //the titles of buttons
                             AbstractUnit.Operand.values()[0]); //default button title
                     if( i>=0){
-                        ((IOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[i]);
-                        tulip.Tulip.mainFrame.getGrapPanel().repaint();
+                        if(selected instanceof IMultipuleOutputUnit){
+                            Object result = JOptionPane.showInputDialog(
+                                tulip.Tulip.mainFrame, 
+                                "Which connection?", 
+                                PropagatorUnit.lastConnectedUnit
+                            );
+                            
+                            if( result != null){
+                                try{
+                                    int n = Integer.parseInt((String) result);
+                                    PropagatorUnit.lastConnectedUnit = 
+                                            (PropagatorUnit.lastConnectedUnit+1 == n)?PropagatorUnit.lastConnectedUnit+1:n;
+                                    PropagatorUnit.lastConnectedUnit++;
+                                    if(n>-1 && n <((IMultipuleOutputUnit)selected).getNumberOfNext()){
+                                        ((IMultipuleOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[i], n);
+                                        tulip.Tulip.mainFrame.getGrapPanel().repaint();
+                                    }
+                                }catch(NumberFormatException e1){
+                                }
+                            }
+                        }else{
+                            ((IOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[i]);
+                            tulip.Tulip.mainFrame.getGrapPanel().repaint();
+                        }
+                        
                     }
                     
                 }

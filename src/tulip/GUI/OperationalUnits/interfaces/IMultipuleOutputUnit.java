@@ -11,5 +11,6 @@ public interface IMultipuleOutputUnit extends IOutputUnit{
     
     public AbstractUnit getNextUnit(int number);
 
+    public int getNumberOfNext();
 
 }
