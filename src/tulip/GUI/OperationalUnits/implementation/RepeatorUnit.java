@@ -57,10 +57,10 @@ public class RepeatorUnit extends InputOutputUnit{
         case UNSPECIFIED:
             g.drawLine(getWidth()/2, getHeight()/2, getWidth()/3*2, getHeight()/8);
             break;
-        case REPEAT_1:
+        case EQ1:
             g.drawLine(getWidth()/2, getHeight()/2, getWidth()/2, 0);
             break;
-        case REPEAT_2:
+        case EQ2:
             g.drawLine(getWidth()/2, getHeight()/2, getWidth()/6*5, getHeight()/7);
             break;
         }
@@ -83,6 +83,11 @@ public class RepeatorUnit extends InputOutputUnit{
         return connectionPoint;
     }
     public enum Type{
-        REPEAT_1, REPEAT_2, UNSPECIFIED 
+        EQ1, EQ2, UNSPECIFIED 
     }  
+    
+    @Override
+    public String getMnemonic() {
+        return type.toString();
+    }
 }

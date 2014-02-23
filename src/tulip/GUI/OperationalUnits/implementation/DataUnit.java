@@ -18,8 +18,8 @@ import static tulip.GUI.Constants.SIZE_UNIT;
 public class DataUnit extends AbstractUnit
                       implements IOutputUnit{
 
-    private static double lastInput = 0;
-    private double data;
+    private static String lastInput = "0";
+    private String data = "0";
     public DataUnit() {
         
         setSize(new Dimension(Constants.DIAMETER*SIZE_UNIT*3/2+1, Constants.DIAMETER*SIZE_UNIT*3/2+1));
@@ -35,7 +35,7 @@ public class DataUnit extends AbstractUnit
         g.setColor(color);
         g.drawOval(0, 0, SIZE_UNIT*Constants.DIAMETER*3/2, SIZE_UNIT*Constants.DIAMETER*3/2);
         g.setFont(new Font(Font.SERIF, Font.BOLD, 24));
-        g.drawString(String.valueOf(data), SIZE_UNIT*Constants.DIAMETER/3, SIZE_UNIT*Constants.DIAMETER);
+        g.drawString(data, SIZE_UNIT*Constants.DIAMETER/2, SIZE_UNIT*Constants.DIAMETER);
 
     }
 
@@ -49,7 +49,7 @@ public class DataUnit extends AbstractUnit
         );
         if( result != null){
             try{
-                data = Double.parseDouble((String) result);
+                data = (String) result;
                 lastInput = data;
                 tulip.Tulip.mainFrame.getGrapPanel().repaint();
             }catch(NumberFormatException e){
@@ -82,6 +82,8 @@ public class DataUnit extends AbstractUnit
         return connectionPoint;
     }
     
-
+    public String getData(){
+        return data;
+    }
 
 }

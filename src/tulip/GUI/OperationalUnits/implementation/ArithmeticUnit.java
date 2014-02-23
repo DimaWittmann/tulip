@@ -17,6 +17,8 @@ public class ArithmeticUnit extends InputOutputUnit{
     
     protected Type type;
     
+
+    
     private static Type lastChoosed;
     public ArithmeticUnit() {
         lastChoosed = Type.ADD;
@@ -62,7 +64,15 @@ public class ArithmeticUnit extends InputOutputUnit{
         }
         
     }
-    
+
+    @Override
+    public String getMnemonic() {
+        return type.toString();
+    }
+
+
+
+
     
     public enum Type{
         ADD, SUB, MUL, DIV, SQR, SQRT

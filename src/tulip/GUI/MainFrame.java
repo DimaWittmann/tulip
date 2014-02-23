@@ -22,6 +22,7 @@ import tulip.GUI.OperationalUnits.implementation.OutUnit;
 import tulip.GUI.OperationalUnits.implementation.PropagatorUnit;
 import tulip.GUI.OperationalUnits.implementation.RepeatorUnit;
 import tulip.GUI.OperationalUnits.implementation.ValveUnit;
+import tulip.GUI.OperationalUnits.listeners.CompileAction;
 import tulip.GUI.listeners.CreateUnitAction;
 
 /**
@@ -127,7 +128,9 @@ public class MainFrame extends JFrame{
         
         
         JMenu runMenu = new JMenu("Run");
+        
         JMenuItem compile = new JMenuItem("Compile");
+        compile.addActionListener(new CompileAction());
         
         runMenu.add(compile);
         
@@ -139,4 +142,8 @@ public class MainFrame extends JFrame{
         return menuBar;
     }
 
+    
+    public void writeConsole(String msg){
+        console.setText(msg+"\n"+console.getText());
+    }
 }

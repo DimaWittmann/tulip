@@ -10,14 +10,14 @@ import tulip.GUI.Constants;
 import static tulip.GUI.Constants.SIZE_UNIT;
 import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
 import tulip.GUI.OperationalUnits.interfaces.IMultipuleOutputUnit;
-import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
+import tulip.GUI.OperationalUnits.interfaces.InputOutputUnit;
 
 /**
  *
  * @author Wittman
  */
-public class PropagatorUnit extends AbstractUnit 
-                            implements ITwoInputUnit, IMultipuleOutputUnit{
+public class PropagatorUnit extends InputOutputUnit 
+                            implements IMultipuleOutputUnit{
 
     private int connNumber;
     private AbstractUnit[] nextUnits;
@@ -54,12 +54,12 @@ public class PropagatorUnit extends AbstractUnit
     
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
         g.setColor(color);
         g.fillOval(0, 0, SIZE_UNIT*Constants.DIAMETER/2, SIZE_UNIT*Constants.DIAMETER/2);
         g.setColor(Color.WHITE);
         g.setFont(new Font(Font.SERIF, Font.BOLD, 16));
         g.drawString(String.valueOf(connNumber), SIZE_UNIT*Constants.DIAMETER/6, SIZE_UNIT*Constants.DIAMETER/3);
+        super.paintComponent(g);
 
     }
 
@@ -88,26 +88,6 @@ public class PropagatorUnit extends AbstractUnit
         return connectionPoint;
     }
 
-    @Override
-    public AbstractUnit getLeftUnit() {
-        return leftUnit;
-    }
-
-    @Override
-    public void setLeftUnit(AbstractUnit leftUnit) {
-        this.leftUnit = leftUnit;
-    }
-
-    @Override
-    public AbstractUnit getRightUnit() {
-        return rightUnit;
-    }
-
-    @Override
-    public void setRightUnit(AbstractUnit rightUnit) {
-        this.rightUnit = rightUnit;
-    }
-    
     
     @Override
     public void setNextUnit(AbstractUnit nextUnit, Operand pos, int number) {
@@ -143,8 +123,14 @@ public class PropagatorUnit extends AbstractUnit
         return connNumber;
     }
 
-    
-    
-    
-
+    @Override
+    public String getMnemonic() {
+        if( connNumber == 2){
+            return "X2";
+        }if (connNumber>2){
+            return "Xn";
+        }else{
+            return null;
+        }
+    }
 }

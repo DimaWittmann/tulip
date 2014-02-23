@@ -74,5 +74,11 @@ public class ValveUnit extends InputOutputUnit{
     public enum Type{
         IF, IF_N
     }  
+    
+    
+    @Override
+    public String getMnemonic() {
+        return type.toString();
+    }
 }
 

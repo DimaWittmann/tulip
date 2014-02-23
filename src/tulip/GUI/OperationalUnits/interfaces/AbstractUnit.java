@@ -1,11 +1,8 @@
 package tulip.GUI.OperationalUnits.interfaces;
 
 import java.awt.Color;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-import static javax.swing.UIManager.put;
+import tulip.GUI.OperationalUnits.implementation.DataUnit;
 
 import tulip.GUI.OperationalUnits.listeners.UnitListener;
 
@@ -18,8 +15,15 @@ public abstract class AbstractUnit extends JPanel{
     public Color color;
     public Operand position;
     
+    public int UnitNumber;
+    public static int counter;
     
     public AbstractUnit() {
+        if(!(this instanceof DataUnit)){
+            counter++;
+        }
+        UnitNumber = counter;
+        
         UnitListener listener = new UnitListener();
         this.addMouseListener(listener);
         this.addMouseMotionListener(listener);
@@ -35,7 +39,7 @@ public abstract class AbstractUnit extends JPanel{
     protected AbstractUnit nextUnit;
    
 
-
+    
 
     
     public abstract void showCustomizedDialog();

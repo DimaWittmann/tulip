@@ -85,7 +85,10 @@ public class LogicUnit extends InputOutputUnit{
         return connectionPoint;
     }   
 
-
+    @Override
+    public String getMnemonic() {
+        return type.toString();
+    }
 
     public enum Type{
         CMPE, CMPM, CMPME, CMPLE

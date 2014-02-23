@@ -1,9 +1,12 @@
 package tulip.GUI;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import tulip.GUI.OperationalUnits.implementation.DataUnit;
 import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
 import tulip.GUI.OperationalUnits.interfaces.IMultipuleOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
@@ -30,6 +33,10 @@ public class GraphPanel extends JPanel{
         this.remove(unit);
         repaint();
     }
+    
+    public ArrayList<AbstractUnit> getUnits(){
+        return units;
+    }
 
     public GraphPanel() {
         units = new ArrayList<>();
@@ -41,6 +48,13 @@ public class GraphPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (AbstractUnit unit : units) {
+            
+            if(!(unit instanceof DataUnit)){
+                g.setColor(Color.blue);
+                g.setFont(new Font(Font.SERIF, Font.BOLD, 14));
+                g.drawString(new Integer(unit.UnitNumber).toString(), unit.getX(), unit.getY());
+                g.setColor(Color.BLACK);
+            }
             if(!(unit instanceof IOutputUnit)){
                 continue;
             }else if(unit instanceof IMultipuleOutputUnit){

@@ -7,19 +7,21 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import javax.swing.JOptionPane;
 import tulip.GUI.Constants;
 import static tulip.GUI.Constants.SIZE_UNIT;
+import tulip.translator.IInstructionUnit;
 
 /**
  *
  * @author Wittman
  */
 public class OutUnit extends AbstractUnit 
-                     implements ITwoInputUnit{
+                     implements ITwoInputUnit, IInstructionUnit{
 
+    private String []op;
     
     public OutUnit() {
+        op = new String[2];
         setSize(new Dimension(10*SIZE_UNIT+1, 5*SIZE_UNIT+1));
     }
     
@@ -81,4 +83,46 @@ public class OutUnit extends AbstractUnit
         connectionPoint.y += this.getY();
         return connectionPoint;
     }
+    
+    
+        
+    @Override
+    public void setOperand(String value, int operand) {
+        try {
+            op[operand] = value;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    @Override
+    public String getOperand(int operand) {
+        try {
+            return op[operand];
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    @Override
+    public String getInstruction() {
+        String inst = 
+            UnitNumber + ": " +
+            getMnemonic() +" " +
+            getOperand(0) + ", " +
+            getOperand(1) + ", !" +
+            "0" + " to "+
+            UnitNumber;
+        
+        return inst;
+            
+    }
+
+    @Override
+    public String getMnemonic() {
+        return "OUT";
+    }
+    
+
 }

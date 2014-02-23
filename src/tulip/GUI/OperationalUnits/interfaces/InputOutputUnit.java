@@ -1,5 +1,6 @@
 package tulip.GUI.OperationalUnits.interfaces;
 
+import tulip.translator.IInstructionUnit;
 import java.awt.Point;
 
 /**
@@ -7,8 +8,14 @@ import java.awt.Point;
  * @author Wittman
  */
 public abstract class InputOutputUnit extends AbstractUnit
-                            implements ITwoInputUnit, IOutputUnit{
+                            implements ITwoInputUnit, IOutputUnit, IInstructionUnit{
 
+    
+    private String [] op;
+    
+    public InputOutputUnit() {
+        op = new String[2];
+    }
     
     @Override
     public AbstractUnit getLeftUnit() {
@@ -68,5 +75,41 @@ public abstract class InputOutputUnit extends AbstractUnit
         this.nextUnit = nextUnit;
     }
     
+    
+    @Override
+    public void setOperand(String value, int operand) {
+        try {
+            op[operand] = value;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    @Override
+    public String getOperand(int operand) {
+        try {
+            return op[operand];
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+
+    @Override
+    public String getInstruction() {
+        String inst = 
+            UnitNumber + ": " +
+            getMnemonic() +" " +
+            getOperand(0) + ", " +
+            getOperand(1) + ", !" +
+            position.ordinal() +" to "+
+            getNextUnit().UnitNumber;
+        
+        return inst;
+            
+    }
+    
+        
 
 }
