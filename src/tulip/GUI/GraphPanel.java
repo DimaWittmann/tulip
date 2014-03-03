@@ -11,6 +11,7 @@ import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
 import tulip.GUI.OperationalUnits.interfaces.IMultipuleOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
+import tulip.GUI.OperationalUnits.listeners.UnitListener;
 
 /**
  *
@@ -20,17 +21,28 @@ public class GraphPanel extends JPanel{
     
     private ArrayList<AbstractUnit> units;
     
+    private int nextNumber;
     public void addUnit(AbstractUnit unit){
-    
+        UnitListener listener = new UnitListener();
+        unit.addMouseListener(listener);
+        unit.addMouseMotionListener(listener);
+        unit.addKeyListener(listener);
+        unit.setNumber(nextNumber);
         units.add(unit);
         this.add(unit);
+        if (!(unit instanceof DataUnit)){
+            nextNumber++;
+        }
         repaint();
     }
     
     public void removeUnit(AbstractUnit unit){
-    
+        unit.setNumber(nextNumber);
         units.remove(unit);
         this.remove(unit);
+        if (!(unit instanceof DataUnit)){
+            nextNumber--;
+        }
         repaint();
     }
     
@@ -39,11 +51,24 @@ public class GraphPanel extends JPanel{
     }
 
     public GraphPanel() {
-        units = new ArrayList<>();
+        this(new ArrayList<AbstractUnit>());
     }
     
-    
+    public void addUnits(ArrayList<AbstractUnit> units){
+        this.units.clear();
+        this.removeAll();
+        for (AbstractUnit unit : units) {
+            addUnit(unit);
+        }
+    }
 
+    public GraphPanel(ArrayList<AbstractUnit> units) {
+        nextNumber = 1;
+        this.setLayout(null);
+        this.units = new ArrayList<>();
+        addUnits(units);
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

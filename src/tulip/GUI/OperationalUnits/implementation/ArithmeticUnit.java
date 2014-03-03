@@ -22,7 +22,7 @@ public class ArithmeticUnit extends InputOutputUnit{
     private static Type lastChoosed;
     public ArithmeticUnit() {
         lastChoosed = Type.ADD;
-        type = null;
+        type = lastChoosed;
         setSize(new Dimension(10*SIZE_UNIT+1, 5*SIZE_UNIT+1));
     }
     

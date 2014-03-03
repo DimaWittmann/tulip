@@ -12,21 +12,25 @@ import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
 public class Translator {
     
     private ArrayList<AbstractUnit> units;
-
-    public Translator(ArrayList<AbstractUnit> units) {
+    private String name;
+    
+    public Translator(ArrayList<AbstractUnit> units, String name) {
         this.units = units;
+        this.name = name;
     }
     
     private void fillData(){
         for (AbstractUnit unit : units) {
-            if(unit instanceof DataUnit){
-                DataUnit dataUnit = (DataUnit)unit;
-                IInstructionUnit nextUnit = (IInstructionUnit) dataUnit.getNextUnit();
-                
-                nextUnit.setOperand(dataUnit.getData(), dataUnit.position.ordinal());
-            }else{
+            if(unit instanceof IOutputUnit ){
+                IInstructionUnit nextUnit = (IInstructionUnit) ((IOutputUnit)unit).getNextUnit();
+                if(nextUnit == null){
+                    tulip.Tulip.mainFrame.writeConsole(unit +"  №"+unit.UnitNumber+ " have no next unit");
+                }else
+                if(unit instanceof DataUnit){
+                    DataUnit dataUnit = (DataUnit)unit;
+                    nextUnit.setOperand(dataUnit.getData(), dataUnit.position.ordinal());
+                }else
                 if(unit instanceof IOutputUnit){
-                    IInstructionUnit nextUnit = (IInstructionUnit) ((IOutputUnit)unit).getNextUnit();
                     nextUnit.setOperand("_", unit.position.ordinal());
                 }
             }
@@ -37,7 +41,7 @@ public class Translator {
     public String translate(){
         fillData();
         
-        String result = "program p1 \n begin\n";
+        String result = "program "+ name.substring(0, name.indexOf("."))+" \n begin\n";
         for (AbstractUnit unit : units) {
             if(unit instanceof IInstructionUnit){
                 result += ((IInstructionUnit)unit).getInstruction() + "\n";

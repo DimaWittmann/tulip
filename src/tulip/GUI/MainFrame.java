@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import tulip.GUI.OperationalUnits.implementation.ArithmeticUnit;
@@ -22,8 +23,14 @@ import tulip.GUI.OperationalUnits.implementation.OutUnit;
 import tulip.GUI.OperationalUnits.implementation.PropagatorUnit;
 import tulip.GUI.OperationalUnits.implementation.RepeatorUnit;
 import tulip.GUI.OperationalUnits.implementation.ValveUnit;
-import tulip.GUI.OperationalUnits.listeners.CompileAction;
+import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
+import tulip.GUI.listeners.CloseFileAction;
+import tulip.GUI.listeners.CompileAction;
 import tulip.GUI.listeners.CreateUnitAction;
+import tulip.GUI.listeners.LoadFileAction;
+import tulip.GUI.listeners.NewFileAction;
+import tulip.GUI.listeners.SaveFileAction;
+import tulip.GUI.listeners.SaveTextFileAction;
 
 /**
  *
@@ -32,14 +39,19 @@ import tulip.GUI.listeners.CreateUnitAction;
 public class MainFrame extends JFrame{
     
     
-    private  GraphPanel grapPanel;
     private JTextArea console;
+    private JTabbedPane tabbedPane;
     
     public JTextArea getConsole(){
         return console;
     }
+   
+    
     public GraphPanel getGrapPanel() {
-        return grapPanel;
+        if(tabbedPane.getSelectedComponent()instanceof GraphPanel){
+            return (GraphPanel) tabbedPane.getSelectedComponent();
+        }
+        return null;
     }
 
     public MainFrame() {
@@ -50,9 +62,9 @@ public class MainFrame extends JFrame{
         
         this.add(ElementsPanel(), BorderLayout.WEST);
         
-        grapPanel = new GraphPanel();
-        grapPanel.setLayout(null);
-        grapPanel.setPreferredSize(new Dimension(800, 400));
+        tabbedPane = new JTabbedPane();
+        tabbedPane.setPreferredSize(new Dimension(800, 400));
+        this.addNewTab();
         
         console = new JTextArea();
         console.setEditable(false);
@@ -60,7 +72,7 @@ public class MainFrame extends JFrame{
         console.setForeground(Color.red);
         JScrollPane scrollConsole = new JScrollPane(console);
         
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, grapPanel, scrollConsole);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tabbedPane, scrollConsole);
         this.add(splitPane);
         
         this.setPreferredSize(new Dimension(800, 600));
@@ -68,6 +80,21 @@ public class MainFrame extends JFrame{
         this.pack();
     }
     
+    public void addNewTab(){
+        tabbedPane.add("untitled", new GraphPanel());
+    }
+    
+    public void deleteTab(){
+        tabbedPane.removeTabAt(tabbedPane.getSelectedIndex());
+    }
+    
+    public String getTabName(){
+        return tabbedPane.getTitleAt(tabbedPane.getSelectedIndex());
+    }
+    
+    public void setTabName(String s){
+        tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), s);
+    }
     
     private JScrollPane ElementsPanel(){
         JToolBar tools = new JToolBar();
@@ -125,13 +152,26 @@ public class MainFrame extends JFrame{
         JMenuBar menuBar = new JMenuBar();
         
         JMenu fileMenu = new JMenu("File");
+        JMenuItem newFile = new JMenuItem("New");
+        newFile.addActionListener(new NewFileAction());
+        JMenuItem closeFile = new JMenuItem("Close");
+        closeFile.addActionListener(new CloseFileAction());
+        JMenuItem saveFile = new JMenuItem("Save");
+        saveFile.addActionListener(new SaveFileAction());
+        JMenuItem saveTextFile = new JMenuItem("Save program");
+        saveTextFile.addActionListener(new SaveTextFileAction());
+        JMenuItem loadFile = new JMenuItem("Load");
+        loadFile.addActionListener(new LoadFileAction());
+        fileMenu.add(newFile);
+        fileMenu.add(closeFile);
+        fileMenu.add(saveFile);
+        fileMenu.add(saveTextFile);
+        fileMenu.add(loadFile);
         
         
         JMenu runMenu = new JMenu("Run");
-        
         JMenuItem compile = new JMenuItem("Compile");
         compile.addActionListener(new CompileAction());
-        
         runMenu.add(compile);
         
         JMenu addMenu = new JMenu("Add");

@@ -1,6 +1,7 @@
 package tulip.GUI.OperationalUnits.interfaces;
 
 import java.awt.Color;
+import java.io.Serializable;
 import javax.swing.JPanel;
 import tulip.GUI.OperationalUnits.implementation.DataUnit;
 
@@ -10,19 +11,24 @@ import tulip.GUI.OperationalUnits.listeners.UnitListener;
  *
  * @author Wittman
  */
-public abstract class AbstractUnit extends JPanel{
+public abstract class AbstractUnit extends JPanel implements Serializable{
     
     public Color color;
     public Operand position;
     
     public int UnitNumber;
-    public static int counter;
-    
+
     public AbstractUnit() {
-        if(!(this instanceof DataUnit)){
-            counter++;
-        }
-        UnitNumber = counter;
+        this(0);
+    }
+    
+    public void setNumber(int number){
+        UnitNumber = number;
+        this.setToolTipText(String.valueOf(number));
+    }
+    
+    public AbstractUnit(int number) {
+        setNumber(number);
         
         UnitListener listener = new UnitListener();
         this.addMouseListener(listener);
