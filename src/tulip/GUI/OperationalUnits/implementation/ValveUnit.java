@@ -57,7 +57,7 @@ public class ValveUnit extends InputOutputUnit{
     
     
         @Override
-    public Point getLeftConnection() {
+    public Point getLeftConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/2, 0);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -65,7 +65,7 @@ public class ValveUnit extends InputOutputUnit{
     }
 
     @Override
-    public Point getRightConnection() {
+    public Point getRightConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/6*5, getHeight()/7);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();

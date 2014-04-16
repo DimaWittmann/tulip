@@ -65,7 +65,7 @@ public class PropagatorUnit extends InputOutputUnit
 
 
     @Override
-    public Point getLeftConnection() {
+    public Point getLeftConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/2, 0);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -73,7 +73,7 @@ public class PropagatorUnit extends InputOutputUnit
     }
 
     @Override
-    public Point getRightConnection() {
+    public Point getRightConnectionPoint() {
         Point connectionPoint = new Point(getWidth(), getHeight()/2);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();

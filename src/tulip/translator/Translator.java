@@ -1,5 +1,6 @@
 package tulip.translator;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import tulip.GUI.OperationalUnits.implementation.DataUnit;
 import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
@@ -24,7 +25,8 @@ public class Translator {
             if(unit instanceof IOutputUnit ){
                 IInstructionUnit nextUnit = (IInstructionUnit) ((IOutputUnit)unit).getNextUnit();
                 if(nextUnit == null){
-                    tulip.Tulip.mainFrame.writeConsole(unit +"  №"+unit.UnitNumber+ " have no next unit");
+//                    tulip.Tulip.mainFrame.writeConsole("unit №"+unit.unitNumber+ " has no next unit");
+//                    unit.color = Color.BLUE;
                 }else
                 if(unit instanceof DataUnit){
                     DataUnit dataUnit = (DataUnit)unit;
@@ -37,14 +39,32 @@ public class Translator {
         }
     }
     
-    
-    public String translate(){
-        fillData();
-        
-        String result = "program "+ name.substring(0, name.indexOf("."))+" \n begin\n";
+    public String validate(){
         for (AbstractUnit unit : units) {
             if(unit instanceof IInstructionUnit){
-                result += ((IInstructionUnit)unit).getInstruction() + "\n";
+                String error = ((IInstructionUnit)unit).validateIntruction();
+                if (error != null){
+                    unit.color = Color.YELLOW;
+                    return unit.unitNumber+"  "+ error;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public String translate(){     
+        fillData();
+        
+        String error = validate();
+        if (error != null){
+            tulip.Tulip.mainFrame.writeConsole(error);
+            return null;
+        }
+   
+        String result = "program "+ name.substring(0, (name.indexOf(".") > 0)?name.indexOf("."):name.length() )+" \n begin\n";
+        for (AbstractUnit unit : units) {
+            if(unit instanceof IInstructionUnit){
+                result += ((IInstructionUnit)unit).getInstruction(unit.unitNumber) + "\n";
             }
         }
         result += "end\n";

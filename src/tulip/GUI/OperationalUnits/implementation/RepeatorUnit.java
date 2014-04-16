@@ -67,8 +67,8 @@ public class RepeatorUnit extends InputOutputUnit{
     }
     
     
-        @Override
-    public Point getLeftConnection() {
+    @Override
+    public Point getLeftConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/2, 0);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -76,7 +76,7 @@ public class RepeatorUnit extends InputOutputUnit{
     }
 
     @Override
-    public Point getRightConnection() {
+    public Point getRightConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/6*5, getHeight()/7);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();

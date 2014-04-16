@@ -70,7 +70,7 @@ public class LogicUnit extends InputOutputUnit{
     }
 
     @Override
-    public Point getLeftConnection() {
+    public Point getLeftConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/4, getHeight()/4);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -78,7 +78,7 @@ public class LogicUnit extends InputOutputUnit{
     }
 
     @Override
-    public Point getRightConnection() {
+    public Point getRightConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/4*3, getHeight()/4);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();

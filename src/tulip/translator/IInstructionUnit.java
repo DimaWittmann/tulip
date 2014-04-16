@@ -1,7 +1,7 @@
 package tulip.translator;
 
 /**
- *
+ * Respresent macroassembelr instruction
  * @author Wittman
  */
 public interface IInstructionUnit {
@@ -11,8 +11,15 @@ public interface IInstructionUnit {
     public String getOperand(int operand);
     
     
-    public abstract String getMnemonic(); 
+    public String getMnemonic(); 
     
 
-    public String getInstruction();
+    public String getInstruction(int number);
+    
+    /**
+     * Test if intruction has all necessary data
+     * @return null if validate, otherwise - description of error
+     */
+    public String validateIntruction();
+    
 }

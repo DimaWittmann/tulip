@@ -6,7 +6,7 @@ import java.awt.Point;
  * Інтерфейс підключення двох джерела даних
  * @author Wittman
  */
-public interface ITwoInputUnit {
+public interface ITwoInputUnit extends IInputUnit{
     
     public AbstractUnit getLeftUnit();
 
@@ -16,7 +16,7 @@ public interface ITwoInputUnit {
     
     public void setRightUnit(AbstractUnit rightUnit);
     
-    public Point getLeftConnection();
+    public Point getLeftConnectionPoint();
     
-    public Point getRightConnection();
+    public Point getRightConnectionPoint();
 }

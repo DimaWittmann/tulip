@@ -38,7 +38,7 @@ public abstract class InputOutputUnit extends AbstractUnit
     }
 
     @Override
-    public Point getLeftConnection() {
+    public Point getLeftConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/4, 0);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -46,7 +46,7 @@ public abstract class InputOutputUnit extends AbstractUnit
     }
 
     @Override
-    public Point getRightConnection() {
+    public Point getRightConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/4*3, 0);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -97,18 +97,76 @@ public abstract class InputOutputUnit extends AbstractUnit
 
 
     @Override
-    public String getInstruction() {
+    public String getInstruction(int number) {
         String inst = 
-            UnitNumber + ": " +
+            number + ": " +
             getMnemonic() +" " +
             getOperand(0) + ", " +
             getOperand(1) + ", !" +
             position.ordinal() +" to "+
-            getNextUnit().UnitNumber;
+            getNextUnit().unitNumber;
         
         return inst;
             
     }
+
+    @Override
+    public String validateIntruction() {
+        if(getOperand(0) == null || getOperand(1) == null){
+            return "Has no operand";
+        }
+        if(this.position == null){
+            return "Choose position";
+        }
+        if(getNextUnit() == null){
+            return "Choose next unit";
+        }
+        return null;
+    }
+
+    @Override
+    public int getNumberInputs() {
+        return 2;
+    }
+
+    @Override
+    public void setNextUnit(AbstractUnit unit, int pos) {
+        if (pos == 0){
+            setLeftUnit(unit);
+        }
+        if(pos == 1){
+            setRightUnit(unit);
+        }
+    }
+
+    @Override
+    public AbstractUnit getNextUnit(int pos) {
+        if (pos == 0){
+            return getRightUnit();
+        }
+        if(pos == 1){
+            return getRightUnit();
+        }
+        return null;
+    }
+
+    @Override
+    public Point getConnectionPoint(int pos) {
+        if (pos == 0){
+            return getLeftConnectionPoint();
+        }
+        if(pos == 1){
+            return getRightConnectionPoint();
+        }
+        return null;
+    }
+    
+    
+    
+    
+    
+    
+    
     
         
 

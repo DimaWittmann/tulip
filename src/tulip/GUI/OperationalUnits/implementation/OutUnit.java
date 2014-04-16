@@ -69,7 +69,7 @@ public class OutUnit extends AbstractUnit
 
 
     @Override
-    public Point getLeftConnection() {
+    public Point getLeftConnectionPoint() {
         Point connectionPoint = new Point(getWidth()/2, 0);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -77,7 +77,7 @@ public class OutUnit extends AbstractUnit
     }
 
     @Override
-    public Point getRightConnection() {
+    public Point getRightConnectionPoint() {
         Point connectionPoint = new Point( getWidth(), getHeight()/2);
         connectionPoint.x += this.getX();
         connectionPoint.y += this.getY();
@@ -106,14 +106,14 @@ public class OutUnit extends AbstractUnit
     }
 
     @Override
-    public String getInstruction() {
+    public String getInstruction(int number) {
         String inst = 
-            UnitNumber + ": " +
+            number + ": " +
             getMnemonic() +" " +
             getOperand(0) + ", " +
             getOperand(1) + ", !" +
             "0" + " to "+
-            UnitNumber;
+            number;
         
         return inst;
             
@@ -123,6 +123,52 @@ public class OutUnit extends AbstractUnit
     public String getMnemonic() {
         return "OUT";
     }
+
+    @Override
+    public String validateIntruction() {
+        if(getOperand(0) == null || getOperand(1) == null){
+            return "Has no operand";
+        }
+        return null;
+    }
+    
+    @Override
+    public int getNumberInputs() {
+        return 2;
+    }
+
+    @Override
+    public void setNextUnit(AbstractUnit unit, int pos) {
+        if (pos == 0){
+            setLeftUnit(unit);
+        }
+        if(pos == 1){
+            setRightUnit(unit);
+        }
+    }
+
+    @Override
+    public AbstractUnit getNextUnit(int pos) {
+        if (pos == 0){
+            return getRightUnit();
+        }
+        if(pos == 1){
+            return getRightUnit();
+        }
+        return null;
+    }
+
+    @Override
+    public Point getConnectionPoint(int pos) {
+        if (pos == 0){
+            return getLeftConnectionPoint();
+        }
+        if(pos == 1){
+            return getRightConnectionPoint();
+        }
+        return null;
+    }
+    
     
 
 }

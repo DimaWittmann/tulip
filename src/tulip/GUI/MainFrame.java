@@ -1,39 +1,13 @@
 package tulip.GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
-import tulip.GUI.OperationalUnits.implementation.ArithmeticUnit;
-import tulip.GUI.OperationalUnits.implementation.DataUnit;
-import tulip.GUI.OperationalUnits.implementation.LogicUnit;
-import tulip.GUI.OperationalUnits.implementation.OutUnit;
-import tulip.GUI.OperationalUnits.implementation.PropagatorUnit;
-import tulip.GUI.OperationalUnits.implementation.RepeatorUnit;
-import tulip.GUI.OperationalUnits.implementation.ValveUnit;
-import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
-import tulip.GUI.listeners.CloseFileAction;
-import tulip.GUI.listeners.CompileAction;
-import tulip.GUI.listeners.CreateUnitAction;
-import tulip.GUI.listeners.LoadFileAction;
-import tulip.GUI.listeners.NewFileAction;
-import tulip.GUI.listeners.SaveFileAction;
-import tulip.GUI.listeners.SaveTextFileAction;
+import java.awt.*;
+import javax.swing.*;
+import tulip.GUI.OperationalUnits.implementation.*;
+import tulip.GUI.listeners.*;
+
 
 /**
- *
+ * Global element of GUI
  * @author Wittman
  */
 public class MainFrame extends JFrame{
@@ -41,6 +15,7 @@ public class MainFrame extends JFrame{
     
     private JTextArea console;
     private JTabbedPane tabbedPane;
+    private JScrollPane scrollConsole;
     
     public JTextArea getConsole(){
         return console;
@@ -60,7 +35,7 @@ public class MainFrame extends JFrame{
         
         this.setJMenuBar(createMenu());
         
-        this.add(ElementsPanel(), BorderLayout.WEST);
+        this.add(getElementsPanel(), BorderLayout.WEST);
         
         tabbedPane = new JTabbedPane();
         tabbedPane.setPreferredSize(new Dimension(800, 400));
@@ -70,7 +45,7 @@ public class MainFrame extends JFrame{
         console.setEditable(false);
         console.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
         console.setForeground(Color.red);
-        JScrollPane scrollConsole = new JScrollPane(console);
+        scrollConsole = new JScrollPane(console);
         
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tabbedPane, scrollConsole);
         this.add(splitPane);
@@ -96,85 +71,74 @@ public class MainFrame extends JFrame{
         tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), s);
     }
     
-    private JScrollPane ElementsPanel(){
+    private JButton createButton(Class instructionClass, String path, String desc ){
+        JButton button = new JButton();
+        button.setAction(new CreateUnitAction(instructionClass));
+        button.setIcon(new ImageIcon(getClass().getResource(path)));
+        button.setToolTipText(desc);
+        return button;
+    }
+    
+    private JScrollPane getElementsPanel(){
         JToolBar tools = new JToolBar();
-        JScrollPane scrollPane = new JScrollPane(tools, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPane = new JScrollPane(tools, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         tools.setRollover(true);
         tools.setLayout(new BoxLayout(tools, BoxLayout.Y_AXIS));
         
-        JButton button = new JButton();
-        button.setAction(new CreateUnitAction(ArithmeticUnit.class));
-        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/arithm.png")));
-        button.setToolTipText("Arithmetic operation");
+        tools.add(createButton(ArithmeticUnit.class, 
+                "/tulip/GUI/images/arithm.png", "Arithmetic operation"));
         
-        tools.add(button);
+        tools.add(createButton(DataUnit.class, 
+                "/tulip/GUI/images/data.png", "Input operation"));
         
-        button = new JButton();
-        button.setAction(new CreateUnitAction(DataUnit.class));
-        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/data.png")));
-        button.setToolTipText("Input operation");
-        tools.add(button);
+        tools.add(createButton(LogicUnit.class, 
+                "/tulip/GUI/images/logic.png", "Logic operation"));
         
-        button = new JButton();
-        button.setAction(new CreateUnitAction(LogicUnit.class));
-        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/logic.png")));
-        button.setToolTipText( "Logic operation");
-        tools.add(button);
+        tools.add(createButton(OutUnit.class, 
+                "/tulip/GUI/images/out.png", "Output operation"));
         
-        button = new JButton();
-        button.setAction(new CreateUnitAction(OutUnit.class));
-        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/out.png")));
-        button.setToolTipText("Output operation");
-        tools.add(button);
+        tools.add(createButton(PropagatorUnit.class, 
+                "/tulip/GUI/images/propagator.png", "Dublicating operation"));
+
+        tools.add(createButton(RepeatorUnit.class, 
+                "/tulip/GUI/images/repeator.png", "Repeat input operation"));
         
-        button = new JButton();
-        button.setAction(new CreateUnitAction(PropagatorUnit.class));
-        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/propagator.png")));
-        button.setToolTipText("Dublicating operation");
-        tools.add(button);
+        tools.add(createButton(ValveUnit.class, 
+                "/tulip/GUI/images/valve.png", "Choose operation"));
         
-        button = new JButton();
-        button.setAction(new CreateUnitAction(RepeatorUnit.class));
-        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/repeator.png")));
-        button.setToolTipText("Repeat input operation");
-        tools.add(button);
         
-        button = new JButton();
-        button.setAction(new CreateUnitAction(ValveUnit.class));
-        button.setIcon(new ImageIcon(getClass().getResource("/tulip/GUI/images/valve.png")));
-        button.setToolTipText("Choose operation");
-        tools.add(button);
         
         return scrollPane;
+    }
+    
+    private JMenuItem createJMenuItem(String title, Action action){
+        JMenuItem item = new JMenuItem(title);
+        item.addActionListener(action);
+        return item;
     }
     
     private JMenuBar createMenu(){
         JMenuBar menuBar = new JMenuBar();
         
         JMenu fileMenu = new JMenu("File");
-        JMenuItem newFile = new JMenuItem("New");
-        newFile.addActionListener(new NewFileAction());
-        JMenuItem closeFile = new JMenuItem("Close");
-        closeFile.addActionListener(new CloseFileAction());
-        JMenuItem saveFile = new JMenuItem("Save");
-        saveFile.addActionListener(new SaveFileAction());
-        JMenuItem saveTextFile = new JMenuItem("Save program");
-        saveTextFile.addActionListener(new SaveTextFileAction());
-        JMenuItem loadFile = new JMenuItem("Load");
-        loadFile.addActionListener(new LoadFileAction());
-        fileMenu.add(newFile);
-        fileMenu.add(closeFile);
-        fileMenu.add(saveFile);
-        fileMenu.add(saveTextFile);
-        fileMenu.add(loadFile);
-        
+        fileMenu.add(createJMenuItem("New", new NewFileAction()));
+        fileMenu.add(createJMenuItem("Close", new CloseFileAction()));
+        fileMenu.add(createJMenuItem("Save", new SaveFileAction()));
+        fileMenu.add(createJMenuItem("Save program", new SaveTextFileAction()));
+        fileMenu.add(createJMenuItem("Load", new LoadFileAction()));
         
         JMenu runMenu = new JMenu("Run");
-        JMenuItem compile = new JMenuItem("Compile");
-        compile.addActionListener(new CompileAction());
-        runMenu.add(compile);
+        runMenu.add(createJMenuItem("Compile", new CompileAction()));
         
         JMenu addMenu = new JMenu("Add");
+        addMenu.add(createJMenuItem("Arithmetic operation", new CreateUnitAction(ArithmeticUnit.class)));
+        addMenu.add(createJMenuItem("Input operation", new CreateUnitAction(DataUnit.class)));
+        addMenu.add(createJMenuItem("Logic operation", new CreateUnitAction(LogicUnit.class)));
+        addMenu.add(createJMenuItem("Output operation", new CreateUnitAction(OutUnit.class)));
+        addMenu.add(createJMenuItem("Dublicating operation", new CreateUnitAction(PropagatorUnit.class)));
+        addMenu.add(createJMenuItem("Velve operation", new CreateUnitAction(RepeatorUnit.class)));
+        addMenu.add(createJMenuItem("Choose operation", new CreateUnitAction(ValveUnit.class)));
         
         menuBar.add(fileMenu);
         menuBar.add(runMenu);
@@ -184,6 +148,7 @@ public class MainFrame extends JFrame{
 
     
     public void writeConsole(String msg){
-        console.setText(msg+"\n"+console.getText());
+        console.setText(console.getText()+msg+"\n");
+        scrollConsole.getVerticalScrollBar().setValue(scrollConsole.getVerticalScrollBar().getMinimum());
     }
 }
