@@ -3,7 +3,7 @@ package tulip.GUI.OperationalUnits.interfaces;
 import java.awt.Point;
 
 /**
- * Інтерфейс підключення двох джерела даних
+ * Interface for unit with two input parameters
  * @author Wittman
  */
 public interface ITwoInputUnit extends IInputUnit{

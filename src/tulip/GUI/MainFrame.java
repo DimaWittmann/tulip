@@ -86,6 +86,13 @@ public class MainFrame extends JFrame{
         tools.setRollover(true);
         tools.setLayout(new BoxLayout(tools, BoxLayout.Y_AXIS));
         
+        
+        tools.add(createButton(InputPin.class, 
+                "/tulip/GUI/images/input.png", "Input pin for macro"));
+        
+        tools.add(createButton(OutputPin.class, 
+                "/tulip/GUI/images/output.png", "Output pin for macro"));
+        
         tools.add(createButton(ArithmeticUnit.class, 
                 "/tulip/GUI/images/arithm.png", "Arithmetic operation"));
         
@@ -107,7 +114,7 @@ public class MainFrame extends JFrame{
         tools.add(createButton(ValveUnit.class, 
                 "/tulip/GUI/images/valve.png", "Choose operation"));
         
-        
+
         
         return scrollPane;
     }

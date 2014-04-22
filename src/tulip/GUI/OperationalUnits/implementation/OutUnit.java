@@ -10,6 +10,7 @@ import java.awt.Point;
 import tulip.GUI.Constants;
 import static tulip.GUI.Constants.SIZE_UNIT;
 import tulip.translator.IInstructionUnit;
+import tulip.translator.Instruction;
 
 /**
  *
@@ -106,15 +107,9 @@ public class OutUnit extends AbstractUnit
     }
 
     @Override
-    public String getInstruction(int number) {
-        String inst = 
-            number + ": " +
-            getMnemonic() +" " +
-            getOperand(0) + ", " +
-            getOperand(1) + ", !" +
-            "0" + " to "+
-            number;
-        
+    public Instruction getInstruction(int number) {
+        Instruction inst = new Instruction(number, getMnemonic(), getOperand(0), 
+                getOperand(1), 0, number);
         return inst;
             
     }
@@ -138,7 +133,7 @@ public class OutUnit extends AbstractUnit
     }
 
     @Override
-    public void setNextUnit(AbstractUnit unit, int pos) {
+    public void setPredUnit(AbstractUnit unit, int pos) {
         if (pos == 0){
             setLeftUnit(unit);
         }
@@ -148,7 +143,7 @@ public class OutUnit extends AbstractUnit
     }
 
     @Override
-    public AbstractUnit getNextUnit(int pos) {
+    public AbstractUnit getPredUnit(int pos) {
         if (pos == 0){
             return getRightUnit();
         }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import tulip.GUI.OperationalUnits.implementation.DataUnit;
 import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
+import tulip.GUI.OperationalUnits.interfaces.IInputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IMultipuleOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
@@ -75,7 +76,7 @@ public class GraphPanel extends JPanel {
         super.paintComponent(g);
         for (AbstractUnit unit : units) {
 
-            if (!(unit instanceof DataUnit)) {
+            if (!(unit instanceof DataUnit)) {   //blue index under unit
                 g.setColor(Color.blue);
                 g.setFont(new Font(Font.SERIF, Font.BOLD, 14));
                 g.drawString(new Integer(unit.unitNumber).toString(), unit.getX(), unit.getY());
@@ -112,14 +113,18 @@ public class GraphPanel extends JPanel {
 
             } else {
                 AbstractUnit next = ((IOutputUnit) unit).getNextUnit();
-                if (next != null && next instanceof ITwoInputUnit) {
+                if (next != null && next instanceof IInputUnit) {
                     Point from = ((IOutputUnit) unit).getDownConnection();
                     Point to = null;
-                    if (unit.position == AbstractUnit.Operand.FIRST) {
-                        to = ((ITwoInputUnit) next).getLeftConnectionPoint();
-                    }
-                    if (unit.position == AbstractUnit.Operand.SECOND) {
-                        to = ((ITwoInputUnit) next).getRightConnectionPoint();
+                    if(next instanceof ITwoInputUnit){
+                        if (unit.position == AbstractUnit.Operand.FIRST) {
+                            to = ((ITwoInputUnit) next).getLeftConnectionPoint();
+                        }
+                        if (unit.position == AbstractUnit.Operand.SECOND) {
+                            to = ((ITwoInputUnit) next).getRightConnectionPoint();
+                        }
+                    }else{
+                        to = ((IInputUnit) next).getConnectionPoint(0);
                     }
                     g.drawLine(from.x, from.y, to.x, to.y);
                     fillArrow(from, to, g, 10, 5);

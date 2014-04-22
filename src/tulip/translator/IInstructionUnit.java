@@ -14,7 +14,7 @@ public interface IInstructionUnit {
     public String getMnemonic(); 
     
 
-    public String getInstruction(int number);
+    public Instruction getInstruction(int number);
     
     /**
      * Test if intruction has all necessary data

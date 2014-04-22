@@ -2,6 +2,7 @@ package tulip.GUI.OperationalUnits.interfaces;
 
 import tulip.translator.IInstructionUnit;
 import java.awt.Point;
+import tulip.translator.Instruction;
 
 /**
  * Абстрактний клас, що представляє елемент зі двома входами і виходом
@@ -97,16 +98,10 @@ public abstract class InputOutputUnit extends AbstractUnit
 
 
     @Override
-    public String getInstruction(int number) {
-        String inst = 
-            number + ": " +
-            getMnemonic() +" " +
-            getOperand(0) + ", " +
-            getOperand(1) + ", !" +
-            position.ordinal() +" to "+
-            getNextUnit().unitNumber;
-        
-        return inst;
+    public Instruction getInstruction(int number) {
+        Instruction instr = new Instruction(number, getMnemonic(), getOperand(0), getOperand(1),  
+                position.ordinal(), getNextUnit().unitNumber);
+        return instr;
             
     }
 
@@ -130,7 +125,7 @@ public abstract class InputOutputUnit extends AbstractUnit
     }
 
     @Override
-    public void setNextUnit(AbstractUnit unit, int pos) {
+    public void setPredUnit(AbstractUnit unit, int pos) {
         if (pos == 0){
             setLeftUnit(unit);
         }
@@ -140,7 +135,7 @@ public abstract class InputOutputUnit extends AbstractUnit
     }
 
     @Override
-    public AbstractUnit getNextUnit(int pos) {
+    public AbstractUnit getPredUnit(int pos) {
         if (pos == 0){
             return getRightUnit();
         }

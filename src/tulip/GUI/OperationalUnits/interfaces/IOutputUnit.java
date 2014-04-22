@@ -3,7 +3,7 @@ package tulip.GUI.OperationalUnits.interfaces;
 import java.awt.Point;
 
 /**
- * Інтерфейс підключення вхідних даних до вузла
+ * Interface with one output pin
  * @author Wittman
  */
 public interface IOutputUnit{

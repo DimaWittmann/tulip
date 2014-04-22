@@ -133,4 +133,18 @@ public class PropagatorUnit extends InputOutputUnit
             return null;
         }
     }
+
+    @Deprecated
+    @Override
+    public Point getDownConnection(int pos) {
+        if(pos == 0){
+            return getDownConnection();
+        }
+        return null;
+    }
+
+    @Override
+    public Operand getNextUnitOperand(int number) {
+        return position;
+    }
 }

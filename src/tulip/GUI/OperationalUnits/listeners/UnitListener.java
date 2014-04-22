@@ -13,6 +13,7 @@ import tulip.GUI.OperationalUnits.implementation.PropagatorUnit;
 import tulip.GUI.OperationalUnits.implementation.RepeatorUnit;
 
 import tulip.GUI.OperationalUnits.interfaces.AbstractUnit;
+import tulip.GUI.OperationalUnits.interfaces.IInputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IMultipuleOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.IOutputUnit;
 import tulip.GUI.OperationalUnits.interfaces.ITwoInputUnit;
@@ -78,8 +79,8 @@ public class UnitListener  implements MouseListener, MouseMotionListener, KeyLis
         case 0x4: //right mouse button
             if(selected != e.getSource()){
                 AbstractUnit next = (AbstractUnit) e.getSource();
-                if( next instanceof ITwoInputUnit && 
-                        selected instanceof IOutputUnit){
+                
+                if( next instanceof ITwoInputUnit && selected instanceof IOutputUnit){
                     
                     Object[] options = AbstractUnit.Operand.values();
                     int i = JOptionPane.showOptionDialog(
@@ -92,33 +93,11 @@ public class UnitListener  implements MouseListener, MouseMotionListener, KeyLis
                             options,  //the titles of buttons
                             AbstractUnit.Operand.values()[0]); //default button title
                     if( i>=0){
-                        if(selected instanceof IMultipuleOutputUnit){
-                            Object result = JOptionPane.showInputDialog(
-                                tulip.Tulip.mainFrame, 
-                                "Which connection?", 
-                                PropagatorUnit.lastConnectedUnit
-                            );
-                            
-                            if( result != null){
-                                try{
-                                    int n = Integer.parseInt((String) result);
-                                    PropagatorUnit.lastConnectedUnit = 
-                                            (PropagatorUnit.lastConnectedUnit+1 == n)?PropagatorUnit.lastConnectedUnit+1:n;
-                                    PropagatorUnit.lastConnectedUnit++;
-                                    if(n>-1 && n <((IMultipuleOutputUnit)selected).getNumberOfNext()){
-                                        ((IMultipuleOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[i], n);
-                                        tulip.Tulip.mainFrame.getGrapPanel().repaint();
-                                    }
-                                }catch(NumberFormatException e1){
-                                }
-                            }
-                        }else{
-                            ((IOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[i]);
-                            tulip.Tulip.mainFrame.getGrapPanel().repaint();
-                        }
-                        
+                        connectTo(next, i);
                     }
-                    
+                }else
+                if(next instanceof IInputUnit && selected instanceof IOutputUnit){
+                    connectTo(next, 0);
                 }
                 
             }
@@ -132,9 +111,38 @@ public class UnitListener  implements MouseListener, MouseMotionListener, KeyLis
 
             break;
         }
-        
-        
+    }
+    
+    /**
+     * Provide connection between selected and next
+     * @param next
+     * @param posConn 
+     */
+    private void connectTo(AbstractUnit next, int posConn){
+        if(selected instanceof IMultipuleOutputUnit){
+            Object result = JOptionPane.showInputDialog(
+                tulip.Tulip.mainFrame, 
+                "Which connection?", 
+                PropagatorUnit.lastConnectedUnit
+            );
 
+            if( result != null){
+                try{
+                    int n = Integer.parseInt((String) result);
+                    PropagatorUnit.lastConnectedUnit = 
+                            (PropagatorUnit.lastConnectedUnit+1 == n)?PropagatorUnit.lastConnectedUnit+1:n;
+                    PropagatorUnit.lastConnectedUnit++;
+                    if(n>-1 && n <((IMultipuleOutputUnit)selected).getNumberOfNext()){
+                        ((IMultipuleOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[posConn], n);
+                        tulip.Tulip.mainFrame.getGrapPanel().repaint();
+                    }
+                }catch(NumberFormatException e1){
+                }
+            }
+        }else{
+            ((IOutputUnit)selected).setNextUnit(next, AbstractUnit.Operand.values()[posConn]);
+            tulip.Tulip.mainFrame.getGrapPanel().repaint();
+        }
     }
         
 
